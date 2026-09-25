@@ -1,0 +1,132 @@
+/workspace/scratch/e257a134090c/focus/app/build.gradle.kts:24: Warning: A newer version of androidx.room:room-runtime than 2.6.1 is available: 2.8.5 [GradleDependency]
+ implementation("androidx.room:room-runtime:2.6.1")
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/e257a134090c/focus/app/build.gradle.kts:25: Warning: A newer version of androidx.room:room-ktx than 2.6.1 is available: 2.8.5 [GradleDependency]
+ implementation("androidx.room:room-ktx:2.6.1")
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/e257a134090c/focus/app/build.gradle.kts:26: Warning: A newer version of androidx.room:room-compiler than 2.6.1 is available: 2.8.5 [GradleDependency]
+ kapt("androidx.room:room-compiler:2.6.1")
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "GradleDependency":
+   This detector looks for usages of libraries where the version you are using
+   is not the current stable release. Using older versions is fine, and there
+   are cases where you deliberately want to stick with an older version.
+   However, you may simply not be aware that a more recent version is
+   available, and that is what this lint check helps find.
+
+/workspace/scratch/e257a134090c/focus/app/src/main/AndroidManifest.xml:3: Warning: The attribute android:allowBackup is deprecated from Android 12 and higher and may be removed in future versions. Consider adding the attribute android:dataExtractionRules specifying an @xml resource which configures cloud backups and device transfers on Android 12 and higher. [DataExtractionRules]
+<application android:name=".AttentionApp" android:label="FOCUS" android:icon="@drawable/ic_launcher" android:allowBackup="false" android:supportsRtl="true" android:theme="@style/Theme.Focus">
+                                                                                                                          ~~~~~
+
+   Explanation for issues of type "DataExtractionRules":
+   Before Android 12, the attributes android:allowBackup and
+   android:fullBackupContent were used to configure all forms of backup,
+   including cloud backups, device-to-device transfers and adb backup.
+
+   In Android 12 and higher, these attributes have been deprecated and will
+   only apply to cloud backups. You should instead use the attribute
+   android:dataExtractionRules, specifying an @xml resource that configures
+   which files to back up, for cloud backups and for device-to-device
+   transfers, separately. If your minSdkVersion supports older versions,
+   you'll still want to specify an android:fullBackupContent resource if the
+   default behavior is not right for your app.
+
+   https://developer.android.com/about/versions/12/backup-restore#xml-changes
+   https://goo.gle/DataExtractionRules
+
+/workspace/scratch/e257a134090c/focus/app/build.gradle.kts:26: Warning: This library supports using KSP instead of kapt, which greatly improves performance. Learn more: https://developer.android.com/studio/build/migrate-to-ksp [KaptUsageInsteadOfKsp]
+ kapt("androidx.room:room-compiler:2.6.1")
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "KaptUsageInsteadOfKsp":
+   KSP is a more efficient replacement for kapt. For libraries that support
+   both, KSP should be used to improve build times.
+
+   https://developer.android.com/studio/build/migrate-to-ksp
+
+/workspace/scratch/e257a134090c/focus/app/src/main/java/dev/attention/app/EffortControls.kt:23: Information: Prefer mutableIntStateOf instead of mutableStateOf [AutoboxingStateCreation from androidx.compose.runtime]
+ var amount by remember{mutableStateOf(current?:30)};var custom by remember{mutableStateOf(false)};var input by remember{mutableStateOf("")}
+                        ~~~~~~~~~~~~~~
+
+   Explanation for issues of type "AutoboxingStateCreation":
+   Calling mutableStateOf<T>() when T is either backed by a primitive type on
+   the JVM or is a value class results in a state implementation that requires
+   all state values to be boxed. This usually causes an additional allocation
+   for each state write, and adds some additional work to auto-unbox values
+   when reading the value of the state. Instead, prefer to use a specialized
+   primitive state implementation for Int, Long, Float, and Double when the
+   state does not need to track null values and does not override the default
+   SnapshotMutationPolicy. See mutableIntStateOf(), mutableLongStateOf(),
+   mutableFloatStateOf(), and mutableDoubleStateOf() for more information.
+
+   Vendor: Jetpack Compose
+   Identifier: androidx.compose.runtime
+   Feedback: https://issuetracker.google.com/issues/new?component=612128
+
+/workspace/scratch/e257a134090c/focus/app/src/main/res/layout/focus_widget_task.xml:2: Warning: This LinearLayout layout or its LinearLayout parent is unnecessary; transfer the background attribute to the other view [UselessParent]
+ <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:background="@drawable/widget_row">
+  ~~~~~~~~~~~~
+
+   Explanation for issues of type "UselessParent":
+   A layout with children that has no siblings, is not a scrollview or a root
+   layout, and does not have a background, can be removed and have its
+   children moved directly into the parent for a flatter and more efficient
+   layout hierarchy.
+
+/workspace/scratch/e257a134090c/focus/app/src/main/res/layout/focus_widget_task.xml:7: Warning: Avoid using sizes smaller than 11sp: 10sp [SmallSp]
+   <TextView android:id="@+id/widget_task_meta" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="10sp" android:textColor="#9A9EAE" android:maxLines="1" android:ellipsize="end" android:paddingTop="4dp"/>
+                                                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "SmallSp":
+   Avoid using sizes smaller than 11sp.
+
+/workspace/scratch/e257a134090c/focus/app/src/main/res/layout/focus_widget.xml:3: Warning: Hardcoded string "F O C U S", should use @string resource [HardcodedText]
+  <TextView android:id="@+id/widget_title" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:gravity="center_vertical" android:text="F O C U S" android:textColor="#EAEAF1" android:textSize="14sp" android:fontFamily="sans-serif-medium" android:contentDescription="Открыть FOCUS"/>
+                                                                                                                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/e257a134090c/focus/app/src/main/res/layout/focus_widget.xml:3: Warning: Hardcoded string "Открыть FOCUS", should use @string resource [HardcodedText]
+  <TextView android:id="@+id/widget_title" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:gravity="center_vertical" android:text="F O C U S" android:textColor="#EAEAF1" android:textSize="14sp" android:fontFamily="sans-serif-medium" android:contentDescription="Открыть FOCUS"/>
+                                                                                                                                                                                                                                                                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/e257a134090c/focus/app/src/main/res/layout/focus_widget.xml:4: Warning: Hardcoded string "Дата", should use @string resource [HardcodedText]
+  <TextView android:id="@+id/widget_calendar" android:layout_width="64dp" android:layout_height="match_parent" android:gravity="center" android:text="Дата" android:textColor="#9A9EAE" android:textSize="12sp" android:contentDescription="Календарь"/>
+                                                                                                                                        ~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/e257a134090c/focus/app/src/main/res/layout/focus_widget.xml:4: Warning: Hardcoded string "Календарь", should use @string resource [HardcodedText]
+  <TextView android:id="@+id/widget_calendar" android:layout_width="64dp" android:layout_height="match_parent" android:gravity="center" android:text="Дата" android:textColor="#9A9EAE" android:textSize="12sp" android:contentDescription="Календарь"/>
+                                                                                                                                                                                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/e257a134090c/focus/app/src/main/res/layout/focus_widget.xml:5: Warning: Hardcoded string "+", should use @string resource [HardcodedText]
+  <TextView android:id="@+id/widget_add" android:layout_width="36dp" android:layout_height="match_parent" android:gravity="center" android:text="+" android:textColor="#B7A7F4" android:textSize="28sp" android:contentDescription="Добавить задачу"/>
+                                                                                                                                   ~~~~~~~~~~~~~~~~
+/workspace/scratch/e257a134090c/focus/app/src/main/res/layout/focus_widget.xml:5: Warning: Hardcoded string "Добавить задачу", should use @string resource [HardcodedText]
+  <TextView android:id="@+id/widget_add" android:layout_width="36dp" android:layout_height="match_parent" android:gravity="center" android:text="+" android:textColor="#B7A7F4" android:textSize="28sp" android:contentDescription="Добавить задачу"/>
+                                                                                                                                                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/e257a134090c/focus/app/src/main/res/layout/focus_widget.xml:10: Warning: Hardcoded string "Все задачи  ›", should use @string resource [HardcodedText]
+ <TextView android:id="@+id/widget_footer" android:layout_width="match_parent" android:layout_height="24dp" android:gravity="center_vertical" android:text="Все задачи  ›" android:textColor="#9A9EAE" android:textSize="11sp"/>
+                                                                                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/e257a134090c/focus/app/src/main/res/layout/focus_widget_task.xml:4: Warning: Hardcoded string "○", should use @string resource [HardcodedText]
+  <TextView android:id="@+id/widget_check" android:layout_width="40dp" android:layout_height="match_parent" android:gravity="center" android:text="○" android:textSize="24sp" android:textColor="#B7A7F4"/>
+                                                                                                                                     ~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "HardcodedText":
+   Hardcoding text attributes directly in layout files is bad for several
+   reasons:
+
+   * When creating configuration variations (for example for landscape or
+   portrait) you have to repeat the actual text (and keep it up to date when
+   making changes)
+
+   * The application cannot be translated to other languages by just adding
+   new translations for existing string resources.
+
+   There are quickfixes to automatically extract this hardcoded string into a
+   resource lookup.
+
+/workspace/scratch/e257a134090c/focus/app/src/main/res/layout/focus_widget_task.xml:5: Warning: When you define paddingEnd you should probably also define paddingStart for right-to-left symmetry [RtlSymmetry]
+  <LinearLayout android:id="@+id/widget_open" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center_vertical" android:paddingEnd="8dp">
+                                                                                                                                                                                                         ~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "RtlSymmetry":
+   If you specify padding or margin on the left side of a layout, you should
+   probably also specify padding on the right side (and vice versa) for
+   right-to-left layout symmetry.
+
+0 errors, 16 warnings

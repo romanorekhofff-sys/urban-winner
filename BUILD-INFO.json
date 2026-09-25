@@ -1,0 +1,14 @@
+{
+  "file": "FOCUS-1.1.apk",
+  "version": "1.1.0",
+  "versionCode": 2,
+  "package": "dev.attention.app",
+  "minAndroid": "8.0 (API 26)",
+  "targetSdk": 35,
+  "sizeBytes": 1513393,
+  "sha256": "38cf15699963eaeceb7b6f4d48cdfa9a2e4c06b881ea285cbcfdd79772293410",
+  "certificateSha256": "bc7ee750dde1fd6c239f89a0f9dc844fe6595d87c5592313fa2942c61d31f74e",
+  "sameCertificateAs1_0": true,
+  "automatedTestsPassed": 34,
+  "roomMigration": "1 -> 2"
+}

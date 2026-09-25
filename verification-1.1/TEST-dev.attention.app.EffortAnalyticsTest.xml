@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.attention.app.EffortAnalyticsTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-09-25T10:49:41" hostname="7f5082153b19" time="0.056">
+  <properties/>
+  <testcase name="equalWhenAllUnknown" classname="dev.attention.app.EffortAnalyticsTest" time="0.034"/>
+  <testcase name="weightedProgress" classname="dev.attention.app.EffortAnalyticsTest" time="0.001"/>
+  <testcase name="emptyWorkloadIsKnownZero" classname="dev.attention.app.EffortAnalyticsTest" time="0.0"/>
+  <testcase name="widgetSizesAndPriority" classname="dev.attention.app.EffortAnalyticsTest" time="0.011"/>
+  <testcase name="timePeriodsSnapshotsAndNoDoubleVolume" classname="dev.attention.app.EffortAnalyticsTest" time="0.006"/>
+  <testcase name="completedUnknownDoesNotHideKnownRemaining" classname="dev.attention.app.EffortAnalyticsTest" time="0.0"/>
+  <testcase name="workloadUsesRemainingByDate" classname="dev.attention.app.EffortAnalyticsTest" time="0.003"/>
+  <testcase name="parentSumAndAutomaticReopening" classname="dev.attention.app.EffortAnalyticsTest" time="0.0"/>
+  <testcase name="incompleteEstimateIsNotZero" classname="dev.attention.app.EffortAnalyticsTest" time="0.0"/>
+  <testcase name="roundingNeverCompletesUnfinishedWork" classname="dev.attention.app.EffortAnalyticsTest" time="0.0"/>
+  <testcase name="simpleRemainingAndTimeFilter" classname="dev.attention.app.EffortAnalyticsTest" time="0.0"/>
+  <testcase name="mixedEstimatesUseCounts" classname="dev.attention.app.EffortAnalyticsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
