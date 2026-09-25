@@ -21,7 +21,7 @@ import org.junit.Assert.*
 class InterfaceTest {
  @get:Rule val compose=createAndroidComposeRule<MainActivity>()
  @Before fun resetState(){val app=ApplicationProvider.getApplicationContext<AttentionApp>();runBlocking(Dispatchers.IO){app.db.clearAllTables();app.settings.save(Preferences())}}
- private fun screenshot(name:String){compose.runOnIdle{val view=compose.activity.window.decorView;val image=Bitmap.createBitmap(view.width,view.height,Bitmap.Config.ARGB_8888);view.draw(android.graphics.Canvas(image));val file=File("/workspace/scratch/e257a134090c/tools/visual/$name.png");file.parentFile!!.mkdirs();file.outputStream().use{image.compress(Bitmap.CompressFormat.PNG,100,it)}}}
+ private fun screenshot(name:String){compose.runOnIdle{val view=compose.activity.window.decorView;val image=Bitmap.createBitmap(view.width,view.height,Bitmap.Config.ARGB_8888);view.draw(android.graphics.Canvas(image));val file=File(System.getProperty("focus.screenshotDir") ?: "build/screenshots","$name.png");file.parentFile!!.mkdirs();file.outputStream().use{image.compress(Bitmap.CompressFormat.PNG,100,it)}}}
  private fun waitText(text:String){compose.waitUntil(10000){compose.onAllNodesWithText(text).fetchSemanticsNodes().isNotEmpty()}}
  @Test fun onboardingCreateCompleteReopenAndScreens(){
   waitText("Далее");compose.onNodeWithText("Далее").performClick();compose.onNodeWithText("Начать").performClick()
