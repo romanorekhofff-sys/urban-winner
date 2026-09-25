@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.attention.app.FocusLogicTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-09-25T10:49:41" hostname="7f5082153b19" time="0.008">
+  <properties/>
+  <testcase name="boundedProgressBonus" classname="dev.attention.app.FocusLogicTest" time="0.0"/>
+  <testcase name="dstKeepsWallClock" classname="dev.attention.app.FocusLogicTest" time="0.004"/>
+  <testcase name="completionReopen" classname="dev.attention.app.FocusLogicTest" time="0.001"/>
+  <testcase name="beforeAndAfterNine" classname="dev.attention.app.FocusLogicTest" time="0.002"/>
+  <testcase name="importantWorkOutranksTrivialUrgentWork" classname="dev.attention.app.FocusLogicTest" time="0.0"/>
+  <testcase name="noDistantProgressBonus" classname="dev.attention.app.FocusLogicTest" time="0.0"/>
+  <testcase name="approachingDeadlineRaisesScore" classname="dev.attention.app.FocusLogicTest" time="0.001"/>
+  <testcase name="followsTimezone" classname="dev.attention.app.FocusLogicTest" time="0.0"/>
+  <testcase name="urgencyBounded" classname="dev.attention.app.FocusLogicTest" time="0.0"/>
+  <testcase name="endOfDay" classname="dev.attention.app.FocusLogicTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

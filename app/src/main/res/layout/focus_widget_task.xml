@@ -1,0 +1,10 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="52dp" android:orientation="vertical" android:paddingBottom="5dp">
+ <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:background="@drawable/widget_row">
+  <TextView android:id="@+id/widget_importance" android:layout_width="2dp" android:layout_height="30dp"/>
+  <TextView android:id="@+id/widget_check" android:layout_width="40dp" android:layout_height="match_parent" android:gravity="center" android:text="○" android:textSize="24sp" android:textColor="#B7A7F4"/>
+  <LinearLayout android:id="@+id/widget_open" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center_vertical" android:paddingEnd="8dp">
+   <TextView android:id="@+id/widget_task_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="14sp" android:textColor="#EAEAF1" android:maxLines="1" android:ellipsize="end"/>
+   <TextView android:id="@+id/widget_task_meta" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="10sp" android:textColor="#9A9EAE" android:maxLines="1" android:ellipsize="end" android:paddingTop="4dp"/>
+  </LinearLayout>
+ </LinearLayout>
+</LinearLayout>

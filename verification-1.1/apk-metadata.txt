@@ -1,0 +1,9 @@
+package: name='dev.attention.app' versionCode='2' versionName='1.1.0' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+sdkVersion:'26'
+targetSdkVersion:'35'
+uses-permission: name='android.permission.POST_NOTIFICATIONS'
+uses-permission: name='android.permission.SCHEDULE_EXACT_ALARM'
+uses-permission: name='android.permission.RECEIVE_BOOT_COMPLETED'
+uses-permission: name='android.permission.VIBRATE'
+uses-permission: name='dev.attention.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
+Same certificate as 1.0: bc7ee750dde1fd6c239f89a0f9dc844fe6595d87c5592313fa2942c61d31f74e

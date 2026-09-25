@@ -1,0 +1,1 @@
+# AndroidX consumer rules

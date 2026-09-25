@@ -1,34 +1,110 @@
-name: Build Android Debug APK
+name: Build FOCUS APK
 
 on:
   push:
-    branches:
-      - main
+    branches: ['**']
   workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  APP_VERSION: "1.2.0"
 
 jobs:
   build:
+    name: Release APK
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
-          cache: gradle
+          java-version: '17'
 
-      - name: Make Gradle executable
-        run: chmod +x ./gradlew
+      - name: Set up Gradle cache
+        uses: gradle/actions/setup-gradle@v4
 
-      - name: Build APK
-        run: ./gradlew assembleDebug
+      - name: Restore signing key from secrets
+        id: signing
+        env:
+          KEYSTORE_BASE64: ${{ secrets.FOCUS_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.FOCUS_KEYSTORE_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
+            mkdir -p "$RUNNER_TEMP/signing"
+            echo "$KEYSTORE_BASE64" | tr -d '\n\r ' | base64 -d > "$RUNNER_TEMP/signing/personal.jks"
+            echo "FOCUS_KEYSTORE=$RUNNER_TEMP/signing/personal.jks" >> "$GITHUB_ENV"
+            echo "signed=true" >> "$GITHUB_OUTPUT"
+            echo "Signing key restored from secrets."
+          else
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Secrets FOCUS_KEYSTORE_BASE64 / FOCUS_KEYSTORE_PASSWORD are not set. The release APK will be UNSIGNED and cannot be installed over FOCUS 1.0/1.1."
+          fi
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
+      - name: Build release APK
+        env:
+          FOCUS_KEYSTORE_PASSWORD: ${{ secrets.FOCUS_KEYSTORE_PASSWORD }}
+          FOCUS_KEY_PASSWORD: ${{ secrets.FOCUS_KEY_PASSWORD }}
+        run: ./gradlew --no-daemon :app:assembleRelease
+
+      - name: Verify signature and rename
+        run: |
+          set -e
+          APK=app/build/outputs/apk/release/app-release.apk
+          if [ "${{ steps.signing.outputs.signed }}" = "true" ]; then
+            OUT="FOCUS-${APP_VERSION}.apk"
+            BT="$ANDROID_HOME/build-tools/35.0.0"
+            [ -x "$BT/apksigner" ] || BT="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)"
+            "$BT/apksigner" verify --print-certs "$APK" | tee cert.txt
+            grep -qi "bc7ee750dde1fd6c239f89a0f9dc844fe6595d87c5592313fa2942c61d31f74e" cert.txt \
+              && echo "Certificate matches FOCUS 1.0/1.1." \
+              || echo "::warning::Certificate SHA-256 differs from the one recorded in BUILD-INFO.json (FOCUS 1.1)."
+          else
+            OUT="FOCUS-${APP_VERSION}-UNSIGNED.apk"
+            APK=app/build/outputs/apk/release/app-release-unsigned.apk
+          fi
+          mkdir -p dist && cp "$APK" "dist/$OUT"
+          sha256sum "dist/$OUT"
+          echo "OUT=$OUT" >> "$GITHUB_ENV"
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: app-debug.apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: ${{ env.OUT }}
+          path: dist/${{ env.OUT }}
+          if-no-files-found: error
+
+      - name: Publish GitHub Release with the APK
+        if: steps.signing.outputs.signed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="v${APP_VERSION}-build${{ github.run_number }}"
+          gh release create "$TAG" "dist/$OUT" \
+            --title "FOCUS ${APP_VERSION} (build ${{ github.run_number }})" \
+            --notes "Release APK, подписан личным ключом. Сборка из ${{ github.sha }} (ветка ${{ github.ref_name }}). Устанавливать поверх FOCUS 1.0/1.1." \
+            --target "${{ github.sha }}"
+
+  test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Run JVM unit tests
+        run: ./gradlew --no-daemon :app:testDebugUnitTest
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-reports
+          path: app/build/reports/tests/testDebugUnitTest
+          if-no-files-found: ignore

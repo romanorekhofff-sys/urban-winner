@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.attention.app.IntegrationJvmTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-09-25T05:05:51" hostname="19bff22bc103" time="76.962">
+  <properties/>
+  <testcase name="databasePersistsAndSupportsCompleteUndoReopenDelete" classname="dev.attention.app.IntegrationJvmTest" time="76.606"/>
+  <testcase name="settingsPersistAndSummaryOpensCorrectRoute" classname="dev.attention.app.IntegrationJvmTest" time="0.231"/>
+  <testcase name="backupValidatesBeforeWritingAndMergesById" classname="dev.attention.app.IntegrationJvmTest" time="0.125"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
