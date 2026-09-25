@@ -45,6 +45,6 @@ Workflow `.github/workflows/android-build.yml` собирает release-APK пр
 - `FOCUS_KEYSTORE_PASSWORD` — `storePassword` из `signing/local.properties`.
 - `FOCUS_KEY_PASSWORD` — `keyPassword` (необязательно, если совпадает с паролем хранилища).
 
-Получить base64 ключа: Windows PowerShell `[Convert]::ToBase64String([IO.File]::ReadAllBytes('signing\personal.jks'))`, macOS/Linux `base64 -w0 signing/personal.jks`.
+Все три значения печатает скрипт из папки с архивом (где лежит `signing/`): Windows `powershell -ExecutionPolicy Bypass -File tools\github-secrets.ps1`, macOS/Linux `sh tools/github-secrets.sh`.
 
 При заданных секретах готовый `FOCUS-1.2.0.apk` публикуется в Releases и как артефакт workflow. Без секретов собирается только неподписанный APK: его нельзя установить поверх FOCUS 1.0/1.1.
